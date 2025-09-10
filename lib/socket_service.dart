@@ -48,20 +48,6 @@ class SocketService {
     return completer.future;
   }
 
-  // Future<Map<String, dynamic>> createTransport() async {
-  //   final completer = Completer<Map<String, dynamic>>();
-
-  //   socket.emitWithAck(
-  //     'createWebRtcTransport',
-  //     {'forceTcp': false, 'producing': true, 'consuming': false},
-  //     ack: (data) {
-  //       completer.complete(Map<String, dynamic>.from(data));
-  //     },
-  //   );
-
-  //   return completer.future;
-  // }
-
   Future<Map<String, dynamic>> createTransport() async {
     final completer = Completer<Map<String, dynamic>>();
 
