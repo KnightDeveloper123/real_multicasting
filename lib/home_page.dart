@@ -19,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   MediaStream? _localStream;
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   bool _inCalling = false;
+  // ignore: non_constant_identifier_names
   DesktopCapturerSource? selected_source_;
   @override
   void initState() {
@@ -58,7 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _localStream = null;
       _localRenderer.srcObject = null;
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -94,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
               () => requestBackgroundPermission(true),
             );
           }
-          print('could not publish video: $e');
+          if (kDebugMode) {
+            print('could not publish video: $e');
+          }
         }
       }
 

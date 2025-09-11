@@ -29,16 +29,18 @@ class SFUService {
     debugPrint('Step4️⃣ Send transport created');
 
     // Helper to normalise ack payload to a String id
-    String _extractStringId(dynamic ackPayload) {
+    String extractStringId(dynamic ackPayload) {
       if (ackPayload == null) return '';
       if (ackPayload is String) return ackPayload;
       if (ackPayload is Map) {
         // common shapes: { id: 'abc' } or { producerId: 'abc' }
         if (ackPayload['id'] != null) return ackPayload['id'].toString();
-        if (ackPayload['producerId'] != null)
+        if (ackPayload['producerId'] != null) {
           return ackPayload['producerId'].toString();
-        if (ackPayload['producer_id'] != null)
+        }
+        if (ackPayload['producer_id'] != null) {
           return ackPayload['producer_id'].toString();
+        }
         // fallback: encode the whole map
         return jsonEncode(ackPayload);
       }
@@ -51,7 +53,6 @@ class SFUService {
       try {
         final dtlsParams = data['dtlsParameters'] as DtlsParameters;
         final callback = data['callback'];
-        final errback = data['errback'];
 
         socketService.socket.emitWithAck(
           'connectTransport',
@@ -104,7 +105,7 @@ class SFUService {
           },
           ack: (ackPayload) {
             try {
-              final producerIdStr = _extractStringId(ackPayload);
+              final producerIdStr = extractStringId(ackPayload);
               debugPrint(
                 'Produce ack returned: $ackPayload -> using id: $producerIdStr',
               );
